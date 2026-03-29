@@ -105,8 +105,7 @@ export async function handleLoginController(req, res) {
 
 export async function handleGetMeController(req, res) {
     try {
-        const { id } = req.user;
-
+        const  {id}  = req.user;
         const user = await userModel
             .findById(id)
             .select("username email")
