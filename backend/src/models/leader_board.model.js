@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
 
 const leaderBoardSchema = new mongoose.Schema({
+    session_id:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"session"
+    },
     user_id:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"user"
@@ -15,6 +19,9 @@ const leaderBoardSchema = new mongoose.Schema({
     saving_percent:{
         type:Number
     },
+    total_rounds:{
+        type:Number
+    }
 },{
     timestamps:true
 })
