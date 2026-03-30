@@ -6,10 +6,10 @@ import { useAuth } from '../features/auth/hooks/useAuth.js'
 
 const App = () => {
 
-  // const auth = useAuth();
-  // useEffect(()=>{
-  //   auth.handleGetMe();
-  // },[])
+  const auth = useAuth();
+  useEffect(()=>{
+    auth.handleGetMe();
+  },[])
 
   return (
     <RouterProvider router={router} />

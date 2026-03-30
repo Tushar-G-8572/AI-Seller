@@ -1,64 +1,49 @@
-import { useDispatch, useSelector } from "react-redux";
-import { useCallback } from "react";
-import {
-  getAllProductCategory,
-  getSingleProduct,
-} from "../api/product.api";
-import {
-  setListLoading, setListError, setProductList,
-  setSelectedLoading, setSelectedError, setSelectedProduct,
-  clearProductList, clearSelectedProduct,
-  selectProductList, selectListLoading, selectListError,
-  selectCurrentCategory, selectSelectedProduct,
-  selectSelectedLoading, selectSelectedError,
-} from "../slices/productSlice";
+import {useDispatch} from 'react-redux'
+import { getAllProductCategory,getSingleProduct,getLeaderBoard } from '../service/product.api'
+import { setProducts,setLoading,setError,setProduct, setLeader } from '../product.slice'
 
-export function useProducts() {
+export function useProducts(){
   const dispatch = useDispatch();
 
-  // ── Read state
-  const list           = useSelector(selectProductList);
-  const listLoading    = useSelector(selectListLoading);
-  const listError      = useSelector(selectListError);
-  const currentCategory= useSelector(selectCurrentCategory);
-  const selectedProduct= useSelector(selectSelectedProduct);
-  const selectedLoading= useSelector(selectSelectedLoading);
-  const selectedError  = useSelector(selectSelectedError);
-
-  // ── Actions
-  const loadByCategory = useCallback(async (category) => {
-    // Skip re-fetch if same category is already loaded
-    if (currentCategory === category && list.length > 0) return;
-
-    dispatch(setListLoading(true));
-    const { data, error } = await fetchProductsByCategoryAPI(category);
-
-    if (error) {
-      dispatch(setListError(error));
-    } else {
-      dispatch(setProductList({ products: data, category }));
+  async function handleGetAllProducts(category) {
+    try{
+      console.log("Hook cat",category)
+      dispatch(setLoading(true));
+      const {products} = await getAllProductCategory(category);
+      dispatch(setProducts(products));
+    }catch(error){
+      dispatch(setError(error.response?.data?.message || "Prodcuts fetching failed"))
+    }finally{
+      dispatch(setLoading(false));
     }
-  }, [dispatch, currentCategory, list.length]);
+  }
 
-  const loadSingleProduct = useCallback(async (productId) => {
-    dispatch(setSelectedLoading(true));
-    const { data, error } = await fetchSingleProductAPI(productId);
-
-    if (error) {
-      dispatch(setSelectedError(error));
-    } else {
-      dispatch(setSelectedProduct(data));
+  async function handleSingleProduct(productId) {
+    try{
+      dispatch(setLoading(true));
+      const {product} = await getSingleProduct(productId);
+      dispatch(setProduct(product))
+    }catch(error){
+      dispatch(setError(error.response?.data?.message || "Failed to fetch product"))
+    }finally{
+      dispatch(setLoading(false))
     }
-  }, [dispatch]);
+  }
 
-  const resetList    = useCallback(() => dispatch(clearProductList()),    [dispatch]);
-  const resetProduct = useCallback(() => dispatch(clearSelectedProduct()), [dispatch]);
+  // useProduct.js hook
+const handleGetLeaderBoard = async () => {
+    try {
+        dispatch(setLoading(true));
+        const res = await getLeaderBoard();
+        dispatch(setLeader(res.data));   // ← res.data.data, not res.data.leaderboard
+    } catch (err) {
+        dispatch(setError(err.message));
+    } finally {
+        dispatch(setLoading(false));
+    }
+}
 
   return {
-    // state
-    list, listLoading, listError, currentCategory,
-    selectedProduct, selectedLoading, selectedError,
-    // actions
-    loadByCategory, loadSingleProduct, resetList, resetProduct,
-  };
+    handleGetAllProducts,handleSingleProduct,handleGetLeaderBoard
+  }
 }

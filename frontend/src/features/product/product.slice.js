@@ -1,67 +1,33 @@
-import { createSlice } from "@reduxjs/toolkit";
+import {createSlice} from '@reduxjs/toolkit'
 
 const productSlice = createSlice({
-  name: "products",
-  initialState: {
-    list: [],
-    listLoading: false,
-    listError: null,
-    currentCategory: null,
-    selectedProduct: null,
-    selectedLoading: false,
-    selectedError: null,
+  name:"product",
+  initialState:{
+    products:[],
+    leader:[],
+    product:null,
+    loading:null,
+    error:null
   },
-  reducers: {
-    setListLoading(state, action) {
-      state.listLoading = action.payload;
+  reducers:{
+    setProducts:(state,action)=>{
+      state.products = action.payload
     },
-    setListError(state, action) {
-      state.listError = action.payload;
-      state.listLoading = false;
+    setProduct:(state,action)=>{
+      state.product = action.payload
     },
-    setProductList(state, action) {
-      state.list = action.payload.products;
-      state.currentCategory = action.payload.category;
-      state.listLoading = false;
-      state.listError = null;
+    setLoading:(state,action)=>{
+      state.loading = action.payload
     },
-    setSelectedLoading(state, action) {
-      state.selectedLoading = action.payload;
+    setError:(state,action)=>{
+      state.error = action.payload
     },
-    setSelectedError(state, action) {
-      state.selectedError = action.payload;
-      state.selectedLoading = false;
-    },
-    setSelectedProduct(state, action) {
-      state.selectedProduct = action.payload;
-      state.selectedLoading = false;
-      state.selectedError = null;
-    },
-    clearProductList(state) {
-      state.list = [];
-      state.listError = null;
-      state.currentCategory = null;
-    },
-    clearSelectedProduct(state) {
-      state.selectedProduct = null;
-      state.selectedError = null;
-    },
-  },
-});
+    setLeader:(state,action)=>{
+      state.leader = action.payload
+    }
+  }
+})
 
-export const {
-  setListLoading, setListError, setProductList,
-  setSelectedLoading, setSelectedError, setSelectedProduct,
-  clearProductList, clearSelectedProduct,
-} = productSlice.actions;
-
-// Selectors — UI imports these, never raw state.products.xxx
-export const selectProductList        = (s) => s.products.list;
-export const selectListLoading        = (s) => s.products.listLoading;
-export const selectListError          = (s) => s.products.listError;
-export const selectCurrentCategory    = (s) => s.products.currentCategory;
-export const selectSelectedProduct    = (s) => s.products.selectedProduct;
-export const selectSelectedLoading    = (s) => s.products.selectedLoading;
-export const selectSelectedError      = (s) => s.products.selectedError;
+export const {setError,setLoading,setProducts,setProduct,setLeader} = productSlice.actions;
 
 export default productSlice.reducer;

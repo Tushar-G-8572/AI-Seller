@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 const roundSchema = new mongoose.Schema({
     user_offer: Number,
     ai_message: String,
+    user_input: String,
     ai_counter_offer: Number,
     timestamp: { type: Date, default: Date.now }
 }, { _id: false });

@@ -3,9 +3,8 @@ import { useNavigate } from 'react-router'
 const Dashboard = () => {
   const navigate = useNavigate();
 
-  const handleNavigate = (e) => {
-    e.preventDefault();
-    navigate(`/products/${e.target.value}`)
+  const handleNavigate = (category) => {
+    navigate(`/products/${category}`)
   }
 
   return (
@@ -33,8 +32,7 @@ const Dashboard = () => {
         <div className="flex flex-col sm:flex-row gap-4">
 
           <button
-            value="clothing"
-            onClick={handleNavigate}
+            onClick={()=>{handleNavigate('clothing')}}
             className="group relative px-8 py-4 border border-gray-700 rounded-xl text-gray-300 text-sm font-medium tracking-wide hover:border-white hover:text-white hover:bg-white/5 transition-all duration-200 cursor-pointer"
           >
             <span className="flex items-center gap-2">
@@ -44,8 +42,7 @@ const Dashboard = () => {
           </button>
 
           <button
-            value="electronics"
-            onClick={handleNavigate}
+            onClick={()=>{handleNavigate('electronics')}}
             className="group relative px-8 py-4 border border-gray-700 rounded-xl text-gray-300 text-sm font-medium tracking-wide hover:border-white hover:text-white hover:bg-white/5 transition-all duration-200 cursor-pointer"
           >
             <span className="flex items-center gap-2">
@@ -55,8 +52,7 @@ const Dashboard = () => {
           </button>
 
           <button
-            value="jewelery"
-            onClick={handleNavigate}
+            onClick={()=>{handleNavigate('jewelery')}}
             className="group relative px-8 py-4 border border-gray-700 rounded-xl text-gray-300 text-sm font-medium tracking-wide hover:border-white hover:text-white hover:bg-white/5 transition-all duration-200 cursor-pointer"
           >
             <span className="flex items-center gap-2">

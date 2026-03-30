@@ -41,3 +41,33 @@ export async function authMiddleware(req, res, next) {
         });
     }
 }
+
+
+export async function socketAuthMiddleware(socket, next) {
+  try {
+    const token =
+      socket.handshake.auth?.token ||
+      socket.handshake.headers?.authorization?.split(" ")[1] ||
+      socket.handshake.headers?.cookie
+        ?.split("; ")
+        .find(c => c.startsWith("token="))
+        ?.split("=")[1];
+
+    console.log("Socket token:", token);
+
+    if (!token) {
+      return next(new Error("Authentication required"));
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    socket.user = decoded;
+    next();
+
+  } catch (err) {
+    console.error("Socket Auth Error:", err);
+
+    if (err.name === "JsonWebTokenError") return next(new Error("Invalid token"));
+    if (err.name === "TokenExpiredError") return next(new Error("Token expired"));
+    return next(new Error("Internal server error"));
+  }
+}

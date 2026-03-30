@@ -45,7 +45,7 @@ const Register = () => {
             <div className="mx-auto flex min-h-[85vh] w-full max-w-5xl  items-center justify-center">
                 <div className=' w-full max-w-md rounded-2xl border border-gray-700 bg-zinc-900/30 p-8 shadow-2xl shadow-black/50 backdrop-blur ' >
                     <h1 className="text-3xl text-center font-bold text-[#31b8c6]">
-                        Welcome to Perplexity
+                        Welcome to AI Seller
                     </h1>
                     <p className="mt-4 text-center text-sm text-zinc-300">
                         Sign Up with your details.

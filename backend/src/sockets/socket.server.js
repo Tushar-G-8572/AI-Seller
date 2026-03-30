@@ -1,5 +1,5 @@
 import {Server} from 'socket.io'
-import { authMiddleware } from '../middlewares/auth.middleware.js';
+import { authMiddleware,socketAuthMiddleware } from '../middlewares/auth.middleware.js';
 import {registerNegotiationSocket} from '../controller/negotiation.controller.js'
 
 let io;
@@ -13,7 +13,7 @@ export  function initSocketServer(httpServer) {
         }
     })
 
-    io.use(authMiddleware)
+    io.use(socketAuthMiddleware)
     
     io.on('connection',(socket)=>{
     console.log('Socket io connected', socket.id);

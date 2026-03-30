@@ -5,14 +5,18 @@ const api = axios.create({
     withCredentials:true
 })
 
-export async function getAllProductCategory({category}) {
-   const responce =  await api.get('/category',{
-        category
-    })
+export async function getAllProductCategory(category) {
+    console.log(" api category",category)
+   const responce =  await api.get(`/category?category=${category}`)
     return responce.data;
 }
 
-export async function getSingleProduct() {
-    const responce = await api.get(`/product/${id}`);
+export async function getSingleProduct(productId) {
+    const responce = await api.get(`/product/${productId}`);
     return responce.data;
+}
+
+export async function getLeaderBoard() {
+    const responce = await api.get('/leaderboard');
+    return responce.data
 }

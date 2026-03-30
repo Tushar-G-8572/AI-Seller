@@ -157,7 +157,7 @@ const ProductCard = ({ product, onNegotiate }) => {
         {/* Price */}
         <div className="flex items-end gap-2">
           <span className={`text-xl font-bold ${theme.accent}`}>
-            ₹{product?.product_offerPrice?.toLocaleString()}
+            {"$" + product?.product_offerPrice?.toLocaleString()}
           </span>
           {product?.product_mrp && (
             <span className="text-gray-600 text-xs line-through mb-0.5">

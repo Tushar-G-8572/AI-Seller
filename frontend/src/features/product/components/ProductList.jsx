@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router'
 import ProductCard from './ProductCard'
+import { useProducts } from '../hooks/useProduct'
+import { useSelector } from 'react-redux'
 
 // ─── Per-category visual identity ────────────────────────────────────────────
 const CATEGORY_META = {
@@ -109,10 +111,21 @@ function ErrorState({ onRetry, onBack }) {
 const ProductList = () => {
   const { category } = useParams()
   const navigate = useNavigate()
+  const {handleGetAllProducts} = useProducts();
 
-  const [products, setProducts] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+  useEffect(()=>{
+    handleGetAllProducts(category);
+  },[])
+
+  const products = useSelector(state => Array.isArray(state.product.products) ? state.product.products : [])
+  const loading = useSelector(state => state.product.loading)
+  const error = useSelector(state => state.product.error)
+
+  
+
+  // const [products, setProducts] = useState([])
+  // const [loading, setLoading] = useState(true)
+  // const [error, setError] = useState(null)
 
   const meta = CATEGORY_META[category] || null
 
@@ -183,7 +196,7 @@ const ProductList = () => {
             ))}
           </div>
         ) : error ? (
-          <ErrorState onRetry={fetchProducts} onBack={() => navigate('/')} />
+          <ErrorState onRetry={()=>{handleGetAllProducts()}} onBack={() => navigate('/')} />
         ) : products.length === 0 ? (
           <EmptyState category={category} meta={meta} onBack={() => navigate('/')} />
         ) : (
