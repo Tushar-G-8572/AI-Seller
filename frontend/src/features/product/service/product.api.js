@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL:"http://localhost:4000/api/products",
+    // baseURL:"http://localhost:4000/api/products",
+     baseURL:"https://ai-seller.onrender.com/api/products",
     withCredentials:true
 })
 

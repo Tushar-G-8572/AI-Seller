@@ -4,7 +4,7 @@ let socket;
 
 export function getSocket() {
   if (!socket) {
-    socket = io("http://localhost:4000", {
+    socket = io("https://ai-seller.onrender.com", {
       withCredentials: true,
       autoConnect: true,
     });
