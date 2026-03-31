@@ -1,7 +1,9 @@
 import { useNavigate } from 'react-router'
 
+
 const Dashboard = () => {
   const navigate = useNavigate();
+  
 
   const handleNavigate = (category) => {
     navigate(`/products/${category}`)

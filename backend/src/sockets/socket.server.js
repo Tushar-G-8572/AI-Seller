@@ -1,5 +1,5 @@
 import {Server} from 'socket.io'
-import { authMiddleware,socketAuthMiddleware } from '../middlewares/auth.middleware.js';
+import { socketAuthMiddleware } from '../middlewares/auth.middleware.js';
 import {registerNegotiationSocket} from '../controller/negotiation.controller.js'
 
 let io;
@@ -16,10 +16,9 @@ export  function initSocketServer(httpServer) {
     io.use(socketAuthMiddleware)
     
     io.on('connection',(socket)=>{
-    console.log('Socket io connected', socket.id);
     registerNegotiationSocket(socket, io)
     socket.on("disconnect", () => {
-      console.log("🔴 Socket disconnected:", socket.id);
+      console.log("🔴 Socket disconnected:");
     });
 })
 

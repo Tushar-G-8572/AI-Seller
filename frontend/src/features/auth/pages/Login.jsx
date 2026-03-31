@@ -1,10 +1,10 @@
-import React from 'react'
 import { useState } from 'react'
 import { Link } from 'react-router'
 import { useAuth } from '../hooks/useAuth'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
 import { Navigate } from 'react-router'
+import Loader from '../../shared/components/Loader'
 
 const Login = () => {
 
@@ -32,7 +32,7 @@ const Login = () => {
 
     if(loading){
         return (
-            <h1>Loading....</h1>
+            <Loader />
         )
     }
 

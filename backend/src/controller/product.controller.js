@@ -6,7 +6,6 @@ export async function getProductsCategory(req, res) {
     try {
         const { category } = req.query; // ✅ CHANGE HERE
 
-        console.log("category:", category);
         if (!category) return res.status(400).json({ success: false, message: "Category needed for search" })
         const productList = await productModel.find({ product_category: category }) || [];
         if (productList.length === 0) {

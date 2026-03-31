@@ -5,6 +5,7 @@ import { useAuth } from '../hooks/useAuth'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
 import { Navigate } from 'react-router'
+import Loader from '../../shared/components/Loader'
 
 const Register = () => {
 
@@ -30,7 +31,7 @@ const Register = () => {
 
     if(loading){
         return (
-            <h1>Loading....</h1>
+            <Loader />
         )
     }
 

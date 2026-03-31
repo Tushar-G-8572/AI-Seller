@@ -217,14 +217,13 @@ function DealClosedBanner({ data, onLeaderboard }) {
 // ─── Main ChatPage ─────────────────────────────────────────────────────────────
 const ChatPage = () => {
   const { productId } = useParams()
-  console.log(productId)
   const navigate = useNavigate()
   const { handleSingleProduct } = useProducts()
 
   const product = useSelector(state => state.product.product)
 
   const [sessionId, setSessionId] = useState(null)
-  const [sessionInfo, setSessionInfo] = useState(null) // { currentOffer, currentRound, maxRounds, roundsLeft }
+  const [sessionInfo, setSessionInfo] = useState(null)
   const [messages, setMessages] = useState([])
   const [offerInput, setOfferInput] = useState('')
   const [isThinking, setIsThinking] = useState(false)
@@ -362,7 +361,7 @@ const ChatPage = () => {
     const msgId = `user-${Date.now()}`
     setMessages(prev => [...prev, { id: msgId, role: 'user', text: `${offerInput}`, offer }])
     setOfferInput('')
-    socketRef.current?.emit('make_offer', { sessionId, userOffer: offer,offerInput })
+    socketRef.current?.emit('make_offer', { sessionId, userOffer: offer, offerInput })
   }, [offerInput, sessionId, isThinking, dealClosed])
 
   const handleAccept = useCallback(() => {
@@ -500,16 +499,16 @@ const ChatPage = () => {
           {/* Input area */}
           {!dealClosed && (
             <div className="px-4 pb-4 pt-3 border-t border-gray-800/40 bg-[#0a0a0a]">
-              <div className="flex items-center gap-3 bg-[#111] border border-gray-800 rounded-xl px-4 py-3 focus-within:border-gray-600 transition-colors">
+              <div className="flex items-center  gap-3 bg-[#111] border border-gray-800 rounded-xl px-4 py-3 focus-within:border-gray-600 transition-colors">
                 <span className="text-gray-600 text-sm">$</span>
                 <input
                   type="text"
                   value={offerInput}
                   onChange={e => setOfferInput(e.target.value)}
                   onKeyDown={handleKey}
-                  placeholder="Enter your offer…"
+                  placeholder="Enter your message and offer price…"
                   disabled={isThinking || dealClosed || !sessionId}
-                  className="flex-1 bg-transparent text-white text-sm outline-none placeholder-gray-700 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                  className="flex-1  bg-transparent  text-white text-sm outline-none placeholder-gray-700 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                 />
                 <button
                   onClick={handleMakeOffer}

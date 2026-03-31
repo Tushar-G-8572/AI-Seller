@@ -53,7 +53,6 @@ export async function socketAuthMiddleware(socket, next) {
         .find(c => c.startsWith("token="))
         ?.split("=")[1];
 
-    console.log("Socket token:", token);
 
     if (!token) {
       return next(new Error("Authentication required"));
